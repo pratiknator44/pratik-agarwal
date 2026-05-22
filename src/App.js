@@ -70,6 +70,14 @@ function App() {
     };
   }, []);
 
+  // Recalculate scale once splash hides and game-frame mounts
+  useEffect(() => {
+    if (!showSplash && gameFrameRef.current) {
+      const rect = gameFrameRef.current.getBoundingClientRect();
+      setScale(rect.width / 960);
+    }
+  }, [showSplash]);
+
   // Preload all game assets
   useEffect(() => {
     const preloadAssets = async () => {
