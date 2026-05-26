@@ -1,0 +1,1038 @@
+.courage-stage-container {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background-color: #0E0519;
+}
+
+/* Thunder / lightning flash overlay */
+@keyframes thunder-flash {
+  0%   { opacity: 0; }
+  4%   { opacity: 0.85; }
+  8%   { opacity: 0; }
+  12%  { opacity: 0.55; }
+  16%  { opacity: 0; }
+  55%  { opacity: 0; }
+  59%  { opacity: 0.75; }
+  63%  { opacity: 0; }
+  67%  { opacity: 0.4; }
+  71%  { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+.courage-thunder-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  pointer-events: none;
+  z-index: 6;
+  opacity: 0;
+  animation: thunder-flash 2.5s infinite;
+}
+
+.courage-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background-color: #0E0519;
+  overflow: hidden;
+}
+
+/* Clouds Layer */
+.courage-clouds-layer {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10rem;
+  pointer-events: none;
+}
+
+.courage-clouds {
+  position: absolute;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  height: auto;
+  width: 200px;
+  opacity: 0.6;
+}
+
+/* Grass */
+.courage-grass-strip {
+  position: absolute;
+  bottom: 50px;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  z-index: 1;
+}
+
+.courage-grass {
+  position: absolute;
+  bottom: 0;
+  width: 100px;
+  height: 50px;
+  image-rendering: crisp-edges;
+}
+
+/* Ground DOM */
+.courage-ground {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #0e0519;
+}
+
+/* Player */
+.courage-player {
+  position: absolute;
+  width: 80px;
+  height: 90px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  z-index: 10;
+}
+
+/* Intro Overlay */
+.courage-intro-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.courage-intro-image {
+  width: 300px;
+  height: auto;
+  margin-bottom: 30px;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.courage-intro-text {
+  color: white;
+  font-size: 24px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  animation: pulse 1s infinite;
+}
+
+.courage-enter-highlight {
+  background-color: #4CAF50;
+  color: white;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.courage-by-pratik {
+  background: white;
+  color: black;
+  padding: 6px 14px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-block;
+}
+
+.courage-by-pratik:hover {
+  background: #f0f0f0;
+  transform: scale(1.08);
+}
+
+.courage-windmill-strip {
+    height: auto;
+    width: 100px;
+    position: absolute;
+    bottom: 0;
+    z-index: 0;
+}
+
+.courage-windmill {
+    height: auto;
+    width: 400px;
+    height: 250px;
+    position: absolute;
+    bottom: 0;
+    z-index: 0;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.6; }
+}
+
+/* Music Toggle Button */
+.courage-music-toggle {
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  z-index: 100;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid white;
+  color: white;
+  font-size: 24px;
+  width: 50px;
+  height: 50px;
+  border-bottom-right-radius: 15px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.courage-music-toggle:hover {
+  background: rgba(0, 0, 0, 0.8);
+}
+
+.courage-top-btn {
+  position: absolute;
+  top: 0;
+  z-index: 100;
+  border-radius: 0 0 15px 15px;
+  cursor: pointer;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  color: #fff;
+  transition: filter 0.15s;
+}
+
+.courage-top-btn:hover {
+  filter: brightness(1.15);
+}
+
+.courage-resume-btn.courage-top-btn {
+  right: 200px;
+  background: #c0392b;
+}
+
+.courage-linkedin-btn.courage-top-btn {
+  right: 20px;
+  background: #0a66c2;
+}
+
+.courage-corporate-journey-btn.courage-top-btn {
+  right: 380px;
+  background: #8B4513;
+}
+
+.courage-king-ramses-health-bar-container {
+  position: fixed;
+  top: 48px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  z-index: 500;
+}
+
+.courage-king-ramses-health-bar-background {
+  width: 100%;
+  height: 16px;
+  background: #333333;
+  border: 2px solid #1b1b1b;
+  overflow: hidden;
+  border-radius: 2px;
+}
+
+.courage-king-ramses-health-bar-fill {
+  height: 100%;
+  background: #ff0000;
+  width: 100%;
+  transition: width 0.1s linear;
+}
+
+/* Muriel Character */
+.courage-muriel-container {
+  position: absolute;
+  bottom: 50px;
+  width: 100px;
+  height: 150px;
+  z-index: 5;
+}
+
+.courage-muriel {
+  width: 100%;
+  height: 100%;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.courage-muriel-text {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: auto;
+  min-width: 150px;
+  color: #222;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: white;
+  padding: 5px 5px;
+  border-radius: 8px;
+  border: 1px solid #000;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  line-height: 1.5;
+  white-space: normal;
+  z-index: 20;
+}
+
+.courage-muriel-text::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 1px solid #000;
+}
+
+.courage-muriel-text::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -2px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 9px solid white;
+  z-index: 1;
+}
+
+/* World container */
+.courage-world {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+/* Courage Home */
+.courage-home {
+  position: absolute;
+  width: 400px;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  z-index: 0;
+  bottom: 50px;
+}
+
+/* Soil */
+.courage-soil-container {
+  position: absolute;
+  bottom: 50px;
+  z-index: 0;
+}
+
+.courage-soil {
+  width: 80px;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  display: block;
+}
+
+.courage-soil-callout {
+  position: absolute;
+  bottom: 110%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 180px;
+  color: #222;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 2px solid #aaa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  line-height: 1.6;
+  white-space: normal;
+  z-index: 20;
+}
+
+.courage-soil-callout::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 11px solid #aaa;
+}
+
+.courage-soil-callout::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -2px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 9px solid white;
+  z-index: 1;
+}
+
+/* Slab Dialog */
+.courage-slab-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 500;
+}
+
+/* Game Over Overlay */
+.courage-game-over-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 600;
+}
+
+.courage-game-over-content {
+  position: relative;
+  background: #2f3342;
+  border: 4px solid #1b1b1b;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.06);
+  padding: 40px 50px;
+  text-align: center;
+  max-width: 75vw;
+}
+
+.courage-win-content {
+  position: relative;
+  background: #2f3342;
+  border: 4px solid #1b1b1b;
+  box-shadow: 0 0 0 4px rgba(255, 255, 255, 0.06);
+  padding: 24px 32px;
+  text-align: center;
+  max-width: 480px;
+  width: 90vw;
+}
+
+.courage-win-content .courage-game-over-image {
+  max-height: 160px;
+  width: auto;
+}
+
+.courage-game-over-title {
+  font-size: 36px;
+  font-weight: 900;
+  color: #ffd700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  text-shadow: 2px 2px 0 #000;
+}
+
+.courage-game-over-thanks {
+  color: #fff;
+  /* margin-bottom: 30px; */
+  font-style: italic;
+}
+
+.courage-contact-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.courage-contact-icons-row {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  gap: 24px;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.courage-contact-icon-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: opacity 0.15s;
+  gap: 4px;
+}
+
+.courage-contact-icon-link:hover {
+  opacity: 1;
+}
+
+.courage-contact-icon-label {
+  font-size: 10px;
+  color: #ccc;
+  text-align: center;
+}
+
+.courage-contact-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* gap: 12px; */
+  /* font-size: 16px; */
+  color: #fff;
+}
+
+.courage-contact-icon {
+  font-size: 24px;
+  width: 30px;
+  text-align: center;
+}
+
+.courage-contact-icon-img {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.courage-contact-text {
+  color: #fff;
+  text-decoration: none;
+  font-size: 15px;
+}
+
+.courage-contact-text:hover {
+  text-decoration: underline;
+}
+
+.courage-contact-subtext {
+  font-size: 13px;
+  color: #aaa;
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+.courage-game-over-actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 28px;
+}
+
+.courage-resume-btn,
+.courage-linkedin-btn,
+.courage-replay-button {
+  padding: 6px;
+  font-weight: 800;
+  font-size: 14px;
+  border: 3px solid #1b1b1b;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: filter 0.15s, transform 0.1s;
+}
+
+.courage-resume-btn:hover,
+.courage-linkedin-btn:hover,
+.courage-replay-button:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+.courage-resume-btn {
+  background: #c0392b;
+  color: #fff;
+}
+
+.courage-linkedin-btn {
+  background: #0a66c2;
+  color: #fff;
+}
+
+.courage-replay-button {
+  background: #27ae60;
+  color: #fff;
+}
+
+.courage-game-over-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  background: transparent;
+  border: none;
+  color: #fff;
+  font-size: 28px;
+  cursor: pointer;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.7;
+  transition: opacity 0.15s;
+}
+
+.courage-game-over-close:hover {
+  opacity: 1;
+}
+
+.courage-corporate-journey-btn {
+  padding: 6px;
+  font-weight: 800;
+  font-size: 14px;
+  border: 3px solid #1b1b1b;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  transition: filter 0.15s, transform 0.1s;
+  background: #8B4513;
+  color: #fff;
+}
+
+.courage-corporate-journey-btn:hover {
+  filter: brightness(1.15);
+  transform: translateY(-1px);
+}
+
+ .courage-btn-icon {
+    width: 16px;
+    height: 16px;
+    object-fit: contain;
+ }
+
+.courage-slab-dialog {
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 12px;
+  padding: 32px 40px;
+  text-align: center;
+  max-width: 400px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.courage-slab-dialog p {
+  font-size: 20px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  color: white;
+  margin: 0 0 20px;
+}
+
+.courage-slab-img {
+  display: block;
+  margin: 0 auto 24px;
+  max-width: 200px;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+}
+
+.courage-slab-ok {
+  background: #4caf50;
+  color: white;
+  border: none;
+  padding: 10px 32px;
+  font-size: 18px;
+  font-weight: bold;
+  border-radius: 6px;
+  cursor: pointer;
+  font-family: Arial, sans-serif;
+  letter-spacing: 1px;
+}
+
+.courage-slab-ok:hover {
+  background: #388e3c;
+}
+
+/* Wind gust */
+.courage-wind-gust {
+  position: absolute;
+  left: -200px;
+  width: 140px;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  opacity: 0.8;
+  z-index: 8;
+  pointer-events: none;
+  animation-name: gust-move;
+  animation-timing-function: linear;
+  animation-fill-mode: both;
+}
+
+@keyframes gust-move {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(100vw + 400px));
+  }
+}
+
+/* Player thought bubble */
+.courage-player-thought {
+  position: absolute;
+  transform: translateX(-50%);
+  min-width: 215px;
+  color: #222;
+  font-size: 13px;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background: white;
+  padding: 10px 14px;
+  border-radius: 8px;
+  border: 2px solid #aaa;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.35);
+  line-height: 1.5;
+  z-index: 30;
+  white-space: nowrap;
+}
+
+.courage-player-thought::after {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-left: 9px solid transparent;
+  border-right: 9px solid transparent;
+  border-top: 11px solid #aaa;
+}
+
+.courage-player-thought::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: -2px;
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-top: 9px solid white;
+  z-index: 1;
+}
+
+/* Spider */
+.courage-spider {
+  position: absolute;
+  width: 120px;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  z-index: 11;
+  bottom: 50px;
+  /* animation: spider-rise 500ms ease-out forwards; */
+}
+
+@keyframes spider-rise {
+  from {
+    bottom: 100px;
+  }
+  to {
+    bottom: -50px;
+  }
+}
+
+/* Suspense message */
+.courage-suspense-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 36px;
+  font-weight: bold;
+  color: white;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.7);
+  z-index: 400;
+  pointer-events: none;
+  white-space: nowrap;
+}
+
+.arrow-key {
+  display: inline-block;
+  font-size: 32px;
+}
+
+/* King Ramses */
+.courage-survive-text {
+  position: absolute;
+  font-size: 28px;
+  font-weight: bold;
+  color: #ff2200;
+  text-shadow: 0 0 8px #ff0000, 2px 2px 0 #000;
+  font-family: 'Courier New', monospace;
+  z-index: 999;
+  pointer-events: none;
+  white-space: nowrap;
+  animation: survive-blink 0.4s step-start infinite;
+}
+
+@keyframes survive-blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+.courage-press-f-hint {
+  position: absolute;
+  font-size: 13px;
+  font-weight: bold;
+  color: #ffe566;
+  text-shadow: 1px 1px 0 #000, 0 0 6px #ff9900;
+  font-family: 'Courier New', monospace;
+  z-index: 999;
+  pointer-events: none;
+  white-space: nowrap;
+  background: rgba(0,0,0,0.5);
+  padding: 3px 7px;
+  border-radius: 4px;
+}
+
+.courage-king-ramses {
+  position: absolute;
+  bottom: 50px;
+  width: 200px;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  z-index: 9;
+  animation: blur-in 1.5s ease-out forwards;
+}
+
+.courage-king-ramses-fading {
+  animation: king-ramses-fade-out 3s ease-out forwards !important;
+}
+
+@keyframes king-ramses-fade-out {
+  0%   { opacity: 1; filter: blur(0px); }
+  60%  { opacity: 0.3; filter: blur(8px); }
+  100% { opacity: 0; filter: blur(20px); }
+}
+
+@keyframes blur-in {
+  from {
+    filter: blur(20px);
+    opacity: 0;
+  }
+  to {
+    filter: blur(0px);
+    opacity: 1;
+  }
+}
+
+/* Bats */
+.courage-bat {
+  position: absolute;
+  width: 30px;
+  height: auto;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  z-index: 12;
+  animation: bat-throw-x 1.5s linear forwards, bat-throw-y 1.5s linear forwards;
+}
+
+@keyframes bat-throw-x {
+  from { left: var(--bat-start-x); }
+  to   { left: var(--bat-end-x); }
+}
+
+@keyframes bat-throw-y {
+  0%   { top: var(--bat-start-y); animation-timing-function: ease-out; }
+  50%  { top: var(--bat-peak-y);  animation-timing-function: ease-in; }
+  100% { top: var(--bat-end-y); }
+}
+
+.courage-rolling-tablet {
+  position: absolute;
+  width: 50px;
+  height: auto;
+  bottom: 50px;
+  z-index: 12;
+  image-rendering: pixelated;
+  image-rendering: crisp-edges;
+  animation: tablet-roll-x 1.2s linear forwards, tablet-spin 1.2s linear forwards;
+}
+
+@keyframes tablet-roll-x {
+  from { left: var(--tablet-start-x); }
+  to   { left: var(--tablet-end-x); }
+}
+
+@keyframes tablet-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(720deg); }
+}
+
+.courage-boss-defeated-overlay {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 700;
+  background: rgba(0, 0, 0, 0.6);
+  animation: boss-defeated-fade-in 0.6s ease forwards;
+}
+
+@keyframes boss-defeated-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+.courage-boss-defeated-content {
+  text-align: center;
+}
+
+.courage-boss-defeated-title {
+  font-size: 52px;
+  font-weight: 900;
+  color: #ffd700;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  text-shadow: 3px 3px 0 #000, 0 0 30px #ff9900;
+  font-family: 'Courier New', monospace;
+  animation: boss-title-pop 0.5s ease-out forwards;
+}
+
+@keyframes boss-title-pop {
+  0%   { transform: scale(0.4); opacity: 0; }
+  70%  { transform: scale(1.1); opacity: 1; }
+  100% { transform: scale(1); }
+}
+
+/* ── Portrait Toast ── */
+.courage-portrait-toast {
+  position: fixed;
+  top: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.80);
+  color: #ffd700;
+  font-size: 15px;
+  font-weight: 700;
+  padding: 8px 18px;
+  border-radius: 20px;
+  white-space: nowrap;
+  z-index: 9999;
+  pointer-events: none;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+
+/* ── Mobile Start Button (in intro overlay) ── */
+.courage-mobile-start-btn {
+  margin-top: 16px;
+  padding: 12px 32px;
+  background: rgba(255, 215, 0, 0.2);
+  border: 2px solid #ffd700;
+  border-radius: 10px;
+  color: #ffd700;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+}
+.courage-mobile-start-btn:active {
+  background: rgba(255, 215, 0, 0.45);
+}
+
+/* ── Mobile Controls ── */
+.courage-mobile-controls {
+  position: fixed;
+  bottom: 20px;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0 20px;
+  z-index: 200;
+  pointer-events: none;
+}
+
+.courage-mobile-left,
+.courage-mobile-right {
+  display: flex;
+  gap: 10px;
+  pointer-events: auto;
+}
+
+.courage-mobile-btn {
+  width: 64px;
+  height: 64px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 3px solid rgba(255, 255, 255, 0.5);
+  color: #fff;
+  font-size: 26px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  pointer-events: auto;
+}
+
+.courage-mobile-btn:active {
+  background: rgba(255, 255, 255, 0.42);
+  transform: scale(0.93);
+}
+
+.courage-mobile-btn-run {
+  background: rgba(255, 165, 0, 0.30);
+  border-color: orange;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.courage-mobile-btn-action {
+  background: rgba(255, 60, 60, 0.30);
+  border-color: #ff5555;
+  font-size: 20px;
+  font-weight: 700;
+}
