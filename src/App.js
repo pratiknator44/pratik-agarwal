@@ -507,6 +507,15 @@ function App() {
           LinkedIn
         </a>
 
+        <a
+          href="/courage"
+          className="courage-stage-btn"
+          title="Play Courage Stage"
+        >
+          <img src={asset('courage/courage-standing.gif')} alt="Courage" className="courage-btn-sprite" />
+          Courage Game
+        </a>
+
         <div className="world" style={{ transform: `translateX(${-cameraX}px)` }}>
           {BACKGROUND_CLOUDS.map((cloud, index) => (
             <img
@@ -701,7 +710,11 @@ function App() {
 
               <button className="replay-button" onClick={handleReplay}>
                 Replay
-              </button>
+              </button><br/>
+              <a href="/courage" className="courage-stage-btn courage-stage-btn-overlay">
+                <img src={asset('courage/courage-standing.gif')} alt="Courage" className="courage-btn-sprite" />
+                Courage: King Ramses Curse
+              </a>
             </div>
           </div>
         )}
