@@ -75,6 +75,9 @@ function CourageStage1() {
   const rollingTabletRef = useRef(null);
   const hasFoundSlabRef = useRef(false);
   const controlsRef = useRef({ left: false, right: false, shift: false });
+  const joystickRef = useRef(null);
+  const joystickKnobRef = useRef(null);
+  const joystickActiveRef = useRef(false);
   const playerRef = useRef(player);
   const gameFrameRef = useRef(null);
   const audioRef = useRef(null);
@@ -669,6 +672,41 @@ function CourageStage1() {
     }
   };
 
+  const handleMobileRunStart = (e) => {
+    e.preventDefault();
+    // Only trigger scream if not already holding shift and player is moving
+    if (!controlsRef.current.shift) {
+      const isMoving = controlsRef.current.left || controlsRef.current.right;
+      if (isMoving && !showIntro && !hasPlayedScreamRef.current) {
+        hasPlayedScreamRef.current = true;
+
+        // Play scream immediately
+        if (screamAudioRef.current) {
+          // Lower background music
+          if (audioRef.current) {
+            audioRef.current.volume = 0.1;
+          }
+
+          // Play scream
+          screamAudioRef.current.currentTime = 0;
+          screamAudioRef.current.play().catch(() => {});
+
+          // Resume volume after 1500ms
+          setTimeout(() => {
+            if (audioRef.current && musicOn) {
+              audioRef.current.volume = 0.35;
+            }
+          }, 1500);
+        }
+      }
+    }
+    controlsRef.current.shift = true;
+    if (!startedRef.current) {
+      startedRef.current = true;
+      setShowIntro(false);
+    }
+  };
+
   const handleMobileTouchEnd = (control) => (e) => {
     e.preventDefault();
     controlsRef.current[control] = false;
@@ -710,17 +748,40 @@ function CourageStage1() {
     }
   };
 
-  const handleMobileTouchDown = (e) => {
+  const handleJoystickInput = (touch) => {
+    if (!touch || !joystickRef.current) return;
+    const rect = joystickRef.current.getBoundingClientRect();
+    const deltaX = touch.clientX - (rect.left + rect.width / 2);
+    const deadzone = 12;
+    controlsRef.current.left = deltaX < -deadzone;
+    controlsRef.current.right = deltaX > deadzone;
+    if (joystickKnobRef.current) {
+      const maxR = rect.width / 2 - 14;
+      const cx = Math.max(-maxR, Math.min(maxR, deltaX));
+      joystickKnobRef.current.style.transform = `translate(calc(-50% + ${cx}px), -50%)`;
+    }
+  };
+
+  const handleJoystickStart = (e) => {
     e.preventDefault();
-    if (hasFoundSlabRef.current) return;
-    const nearSoil = Math.abs(playerRef.current.x + 40 - (SOIL_X + 40)) < COLLISION_RANGES.SOIL_INTERACT;
-    if (nearSoil) {
-      if (audioRef.current) { audioRef.current.pause(); audioRef.current.currentTime = 0; }
-      if (screamAudioRef.current) { screamAudioRef.current.pause(); screamAudioRef.current.currentTime = 0; }
-      setMusicOn(false);
-      hasFoundSlabRef.current = true;
-      setHasFoundSlab(true);
-      setShowSlabDialog(true);
+    if (!startedRef.current) { startedRef.current = true; setShowIntro(false); }
+    joystickActiveRef.current = true;
+    handleJoystickInput(e.touches[0]);
+  };
+
+  const handleJoystickMove = (e) => {
+    if (!joystickActiveRef.current) return;
+    e.preventDefault();
+    handleJoystickInput(e.touches[0]);
+  };
+
+  const handleJoystickEnd = (e) => {
+    e.preventDefault();
+    joystickActiveRef.current = false;
+    controlsRef.current.left = false;
+    controlsRef.current.right = false;
+    if (joystickKnobRef.current) {
+      joystickKnobRef.current.style.transform = 'translate(-50%, -50%)';
     }
   };
 
@@ -737,25 +798,43 @@ function CourageStage1() {
         <div className="courage-portrait-toast">{UI_TEXT.ROTATE_PORTRAIT}</div>
       )}
       {showIntro && (
-        <div className="courage-intro-overlay">
+        <div
+          className="courage-intro-overlay"
+          onClick={isMobile ? handleMobileStartGame : undefined}
+          style={isMobile ? { cursor: 'pointer' } : undefined}
+        >
           <img src={asset('intro.png')} alt="Intro" className="courage-intro-image" />
           <div className="courage-intro-text">
-            Press <label className="courage-enter-highlight">Enter</label> to start
-            <p>[W][A][S][D] or Arrow Keys to move. [Shift] to run</p>
-            <p>
-              <a
-                href="https://www.linkedin.com/in/bitastudio"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="courage-by-pratik"
-              >
-                by Pratik
-              </a>
-            </p>
-            {isMobile && (
-              <button className="courage-mobile-start-btn" onClick={handleMobileStartGame}>
-                TAP TO START
-              </button>
+            {isMobile ? (
+              <>
+                <p className="courage-tap-hint">Tap anywhere to start</p>
+                <p>
+                  <a
+                    href="https://www.linkedin.com/in/bitastudio"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="courage-by-pratik"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    by Pratik
+                  </a>
+                </p>
+              </>
+            ) : (
+              <>
+                Press <label className="courage-enter-highlight">Enter</label> to start
+                <p>[W][A][S][D] or Arrow Keys to move. [Shift] to run</p>
+                <p>
+                  <a
+                    href="https://www.linkedin.com/in/bitastudio"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="courage-by-pratik"
+                  >
+                    by Pratik
+                  </a>
+                </p>
+              </>
             )}
           </div>
         </div>
@@ -1049,7 +1128,7 @@ function CourageStage1() {
         ))}
         {showSuspenseMessage && (
           <div className="courage-suspense-message">
-            {UI_TEXT.SUSPENSE_MESSAGE}
+            {isMobile ? 'RUN !!!' : UI_TEXT.SUSPENSE_MESSAGE}
           </div>
         )}
         {showSlabDialog && (
@@ -1155,29 +1234,21 @@ function CourageStage1() {
         {isMobile && !showIntro && !showGameOver && (
           <div className="courage-mobile-controls">
             <div className="courage-mobile-left">
-              <button
-                className="courage-mobile-btn"
-                onTouchStart={handleMobileTouchStart('left')}
-                onTouchEnd={handleMobileTouchEnd('left')}
-                onTouchCancel={handleMobileTouchEnd('left')}
-              >◀</button>
-              <button
-                className="courage-mobile-btn"
-                onTouchStart={handleMobileTouchStart('right')}
-                onTouchEnd={handleMobileTouchEnd('right')}
-                onTouchCancel={handleMobileTouchEnd('right')}
-              >▶</button>
-              <button
-                className="courage-mobile-btn"
-                onTouchStart={handleMobileTouchDown}
-                onTouchEnd={(e) => e.preventDefault()}
-                onTouchCancel={(e) => e.preventDefault()}
-              >↓</button>
+              <div
+                ref={joystickRef}
+                className="courage-joystick-base"
+                onTouchStart={handleJoystickStart}
+                onTouchMove={handleJoystickMove}
+                onTouchEnd={handleJoystickEnd}
+                onTouchCancel={handleJoystickEnd}
+              >
+                <div ref={joystickKnobRef} className="courage-joystick-knob" />
+              </div>
             </div>
             <div className="courage-mobile-right">
               <button
                 className="courage-mobile-btn courage-mobile-btn-run"
-                onTouchStart={handleMobileTouchStart('shift')}
+                onTouchStart={handleMobileRunStart}
                 onTouchEnd={handleMobileTouchEnd('shift')}
                 onTouchCancel={handleMobileTouchEnd('shift')}
               >RUN</button>
@@ -1186,7 +1257,7 @@ function CourageStage1() {
                 onTouchStart={handleMobileTouchActionF}
                 onTouchEnd={(e) => e.preventDefault()}
                 onTouchCancel={(e) => e.preventDefault()}
-              >F</button>
+              >✋</button>
             </div>
           </div>
         )}
