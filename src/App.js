@@ -508,7 +508,7 @@ function App() {
         </a>
 
         <a
-          href="/courage"
+          href="#/courage"
           className="courage-stage-btn"
           title="Play Courage Stage"
         >
