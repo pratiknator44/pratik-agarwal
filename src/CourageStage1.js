@@ -97,6 +97,13 @@ function CourageStage1() {
   useEffect(() => { rollingTabletRef.current = rollingTablet; }, [rollingTablet]);
   useEffect(() => { hasFoundSlabRef.current = hasFoundSlab; }, [hasFoundSlab]);
 
+  // Page title
+  useEffect(() => {
+    const prev = document.title;
+    document.title = 'King Ramses Curse | React | Pratik Agarwal | Developer for hire';
+    return () => { document.title = prev; };
+  }, []);
+
   // Camera follows player, clamped to world bounds
   const cameraX = useMemo(() => {
     if ((showKingRamses || bossDefeated || isCinematic) && !showReturnToMuriel) return window.innerWidth * 2;
