@@ -674,30 +674,22 @@ function CourageStage1() {
 
   const handleMobileRunStart = (e) => {
     e.preventDefault();
-    // Only trigger scream if not already holding shift and player is moving
-    if (!controlsRef.current.shift) {
-      const isMoving = controlsRef.current.left || controlsRef.current.right;
-      if (isMoving && !showIntro && !hasPlayedScreamRef.current) {
-        hasPlayedScreamRef.current = true;
+    // Trigger scream on first RUN press (no isMoving check — on mobile RUN and
+    // the joystick are tapped independently, so movement state can't be assumed)
+    if (!controlsRef.current.shift && !showIntro && !hasPlayedScreamRef.current) {
+      hasPlayedScreamRef.current = true;
 
-        // Play scream immediately
-        if (screamAudioRef.current) {
-          // Lower background music
-          if (audioRef.current) {
-            audioRef.current.volume = 0.1;
-          }
-
-          // Play scream
-          screamAudioRef.current.currentTime = 0;
-          screamAudioRef.current.play().catch(() => {});
-
-          // Resume volume after 1500ms
-          setTimeout(() => {
-            if (audioRef.current && musicOn) {
-              audioRef.current.volume = 0.35;
-            }
-          }, 1500);
+      if (screamAudioRef.current) {
+        if (audioRef.current) {
+          audioRef.current.volume = 0.1;
         }
+        screamAudioRef.current.currentTime = 0;
+        screamAudioRef.current.play().catch(() => {});
+        setTimeout(() => {
+          if (audioRef.current && musicOn) {
+            audioRef.current.volume = 0.35;
+          }
+        }, 1500);
       }
     }
     controlsRef.current.shift = true;
