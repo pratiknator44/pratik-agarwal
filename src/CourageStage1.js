@@ -824,32 +824,11 @@ function CourageStage1() {
             {isMobile ? (
               <>
                 <p className="courage-tap-hint">Tap anywhere to start</p>
-                <p>
-                  <a
-                    href="https://www.linkedin.com/in/bitastudio"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="courage-by-pratik"
-                    onClick={(e) => e.stopPropagation()}
-                  >
-                    by Pratik
-                  </a>
-                </p>
               </>
             ) : (
               <>
                 Press <label className="courage-enter-highlight">Enter</label> to start
                 <p>[W][A][S][D] or Arrow Keys to move. [Shift] to run</p>
-                <p>
-                  <a
-                    href="https://www.linkedin.com/in/bitastudio"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="courage-by-pratik"
-                  >
-                    by Pratik
-                  </a>
-                </p>
               </>
             )}
           </div>
