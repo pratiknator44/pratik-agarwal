@@ -109,6 +109,7 @@ function App() {
         'client-1.png',
         'client-2.png',
         'client-3.png',
+        'client-6.webp',
         'home.png',
         'linkedin-icon.webp',
       ];
@@ -148,26 +149,26 @@ function App() {
     const homeMidpoint = HOME_X + 60; // Home is ~120px wide, so midpoint is +60
     if (started && !reachedHomeRef.current && player.x >= homeMidpoint) {
       reachedHomeRef.current = true;
-      
+
       // Player disappears instantly
       setGameEnded(true);
-      
+
       // Stop background music
       if (audioRef.current) {
         audioRef.current.pause();
       }
-      
+
       // Play reached-home sound
       if (reachedHomeAudioRef.current) {
         reachedHomeAudioRef.current.currentTime = 0;
-        reachedHomeAudioRef.current.play().catch(() => {});
+        reachedHomeAudioRef.current.play().catch(() => { });
       }
-      
+
       // Show game over overlay after 4 seconds
       setTimeout(() => {
         setShowOverlay(true);
       }, 4000);
-      
+
       // Show fireworks after 3 seconds, for 2 seconds
       setTimeout(() => {
         setShowFireworks(true);
@@ -234,7 +235,7 @@ function App() {
     audio.volume = musicVolume;
 
     if (started && musicOn) {
-      audio.play().catch(() => {});
+      audio.play().catch(() => { });
       return;
     }
 
@@ -314,7 +315,7 @@ function App() {
       // Play jump SFX — check playerRef (synced via useEffect) for onGround
       if (wantsJump && playerRef.current.onGround && jumpAudioRef.current) {
         jumpAudioRef.current.currentTime = 0;
-        jumpAudioRef.current.play().catch(() => {});
+        jumpAudioRef.current.play().catch(() => { });
       }
 
       setPlayer((prev) => {
@@ -370,25 +371,25 @@ function App() {
         setGoombaState((prevGoombas) => {
           const updated = prevGoombas.map((goomba) => {
             if (goomba.dead) return goomba; // Freeze dead goomba, same reference = no re-render churn
-            
+
             // Move goomba towards player
             let newX = goomba.x + goomba.vx;
-            
+
             // Collision detection
             const playerWidth = 48;
             const goombaWidth = 48;
-            const collision = 
+            const collision =
               playerRef.current.x < newX + goombaWidth &&
               playerRef.current.x + playerWidth > newX &&
               playerRef.current.y < goomba.y + 40 &&
               playerRef.current.y + 48 > goomba.y;
-            
+
             // Player stomps goomba only when falling from above (in air with downward velocity)
             if (collision && !playerRef.current.onGround && playerRef.current.vy > 0) {
               if (goombaAudioRef.current) {
                 goombaAudioRef.current.currentTime = 0;
-                goombaAudioRef.current.play().catch(() => {});
-                
+                goombaAudioRef.current.play().catch(() => { });
+
                 setMusicVolume(0.1);
                 setTimeout(() => {
                   setMusicVolume(0.35);
@@ -407,7 +408,7 @@ function App() {
               }, 5000);
               return { ...goomba, dead: true };
             }
-            
+
             return { ...goomba, x: newX };
           });
           return updated;
@@ -446,7 +447,7 @@ function App() {
     reachedHomeRef.current = false;
     if (audioRef.current) {
       audioRef.current.currentTime = 0;
-      audioRef.current.play().catch(() => {});
+      audioRef.current.play().catch(() => { });
     }
   };
 
@@ -478,272 +479,272 @@ function App() {
       )}
       {showSplash && (
         <div className="splash-screen">
-          <img src={asset('mario-small-running.gif')} alt="Mario Running" className="splash-mario"/>
+          <img src={asset('mario-small-running.gif')} alt="Mario Running" className="splash-mario" />
           <p className="splash-text">Billable, thou art cherished; unbillable, thou art forsaken.</p>
         </div>
       )}
       {!showSplash && (
-      <div className="game-frame" ref={gameFrameRef} role="application" aria-label="Mario portfolio game">
-        <div className="game-inner" style={{ transform: `scale(${scale})` }}>
-        <button className="music-toggle" type="button" onClick={handleMusicToggle}>
-          {musicLabel}
-        </button>
-        <a
-          href={asset('pratik_ag_resume.pdf')}
-          download="Pratik_Agarwal_Resume.pdf"
-          className="resume-button"
-          title="Download resume"
-        >
-          Download Resume&nbsp;
-        </a>
-
-        <a
-          href="https://www.linkedin.com/in/bitastudio"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="linkedin-button"
-          title="Visit LinkedIn profile"
-        >
-          LinkedIn
-        </a>
-
-        <a
-          href="#/courage"
-          className="courage-stage-btn"
-          title="Play Courage Stage"
-        >
-          <img src={asset('courage/courage-standing.gif')} alt="Courage" className="courage-btn-sprite" />
-          Courage Game
-        </a>
-
-        <div className="world" style={{ transform: `translateX(${-cameraX}px)` }}>
-          {BACKGROUND_CLOUDS.map((cloud, index) => (
-            <img
-              key={`cloud-${index}`}
-              src={asset(cloud.img)}
-              className="cloud"
-              alt=""
-              style={{ left: cloud.x, top: cloud.y }}
-            />
-          ))}
-
-          {BUSHES.map((bush, index) => (
-            <img
-              key={`bush-${index}`}
-              src={asset(bush.img)}
-              className="bush"
-              alt=""
-              style={{ left: bush.x, bottom: GROUND_ROWS * TILE_SIZE }}
-            />
-          ))}
-
-          {CLIENT_IMAGES.map((client, index) => (
-            <img
-              key={`client-${index}`}
-              src={asset(client.img)}
-              className="client-image"
-              alt=""
-              style={{ left: client.x, bottom: GROUND_ROWS * TILE_SIZE, background: "white" }}
-            />
-          ))}
-
-          {/* Goombas */}
-          {goombaState.map((goomba, index) => (
-            <div key={`goomba-${index}`} className="goomba-container" style={{ left: goomba.x, bottom: GROUND_ROWS * TILE_SIZE }}>
-              <img
-                src={asset(goomba.dead ? 'goomba-dead.png' : 'goomba.gif')}
-                className="goomba"
-                alt="Goomba"
-              />
-              {!goomba.dead && <span className="goomba-label">COVID</span>}
-            </div>
-          ))}
-
-          {/* In-world career billboards */}
-          {CAREER_BANNERS.map((banner, index) => (
-            <div
-              key={`billboard-${index}`}
-              className={`billboard${activeBanner === banner ? ' billboard--active' : ''}`}
-              style={{ left: banner.x, bottom: GROUND_ROWS * TILE_SIZE }}
+        <div className="game-frame" ref={gameFrameRef} role="application" aria-label="Mario portfolio game">
+          <div className="game-inner" style={{ transform: `scale(${scale})` }}>
+            <button className="music-toggle" type="button" onClick={handleMusicToggle}>
+              {musicLabel}
+            </button>
+            <a
+              href={asset('pratik_ag_resume.pdf')}
+              download="Pratik_Agarwal_Resume.pdf"
+              className="resume-button"
+              title="Download resume"
             >
-              <div className="billboard-sign">
-                <div className="billboard-company">{banner.company}</div>
-                <div className="billboard-dates">{banner.doj} &ndash; {banner.dos}</div>
-                <div className="billboard-designation">{banner.designation}</div>
-                <div className="billboard-location">{banner.location}</div>
+              Download Resume&nbsp;
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/bitastudio"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="linkedin-button"
+              title="Visit LinkedIn profile"
+            >
+              LinkedIn
+            </a>
+
+            <a
+              href="#/courage"
+              className="courage-stage-btn"
+              title="Play Courage Stage"
+            >
+              <img src={asset('courage/courage-standing.gif')} alt="Courage" className="courage-btn-sprite" />
+              Courage Game
+            </a>
+
+            <div className="world" style={{ transform: `translateX(${-cameraX}px)` }}>
+              {BACKGROUND_CLOUDS.map((cloud, index) => (
+                <img
+                  key={`cloud-${index}`}
+                  src={asset(cloud.img)}
+                  className="cloud"
+                  alt=""
+                  style={{ left: cloud.x, top: cloud.y }}
+                />
+              ))}
+
+              {BUSHES.map((bush, index) => (
+                <img
+                  key={`bush-${index}`}
+                  src={asset(bush.img)}
+                  className="bush"
+                  alt=""
+                  style={{ left: bush.x, bottom: GROUND_ROWS * TILE_SIZE }}
+                />
+              ))}
+
+              {CLIENT_IMAGES.map((client, index) => (
+                <img
+                  key={`client-${index}`}
+                  src={asset(client.img)}
+                  className="client-image"
+                  alt=""
+                  style={{ left: client.x, bottom: GROUND_ROWS * TILE_SIZE, background: "white" }}
+                />
+              ))}
+
+              {/* Goombas */}
+              {goombaState.map((goomba, index) => (
+                <div key={`goomba-${index}`} className="goomba-container" style={{ left: goomba.x, bottom: GROUND_ROWS * TILE_SIZE }}>
+                  <img
+                    src={asset(goomba.dead ? 'goomba-dead.png' : 'goomba.gif')}
+                    className="goomba"
+                    alt="Goomba"
+                  />
+                  {!goomba.dead && <span className="goomba-label">COVID</span>}
+                </div>
+              ))}
+
+              {/* In-world career billboards */}
+              {CAREER_BANNERS.map((banner, index) => (
+                <div
+                  key={`billboard-${index}`}
+                  className={`billboard${activeBanner === banner ? ' billboard--active' : ''}`}
+                  style={{ left: banner.x, bottom: GROUND_ROWS * TILE_SIZE }}
+                >
+                  <div className="billboard-sign">
+                    <div className="billboard-company">{banner.company}</div>
+                    <div className="billboard-dates">{banner.doj} &ndash; {banner.dos}</div>
+                    <div className="billboard-designation">{banner.designation}</div>
+                    <div className="billboard-location">{banner.location}</div>
+                  </div>
+                  <div className="billboard-pole" />
+                </div>
+              ))}
+
+              {/* Lockdown warning billboard */}
+              <div className="lockdown-billboard" style={{ left: LOCKDOWN_BILLBOARD_X, bottom: GROUND_ROWS * TILE_SIZE }}>
+                <div className="lockdown-sign">LOCKDOWN</div>
+                <div className="lockdown-pole" />
               </div>
-              <div className="billboard-pole" />
+
+              {/* Home zone with label */}
+              <div className="home-goal" style={{ left: HOME_X, bottom: GROUND_ROWS * TILE_SIZE }}>
+                <img
+                  src={asset('home.png')}
+                  className="home"
+                  alt="Home goal"
+                />
+                <span className="home-label">YOUR TEAM</span>
+
+                {showFireworks && (
+                  <img
+                    src={asset('fireworks.gif')}
+                    className="fireworks"
+                    alt="Fireworks"
+                    style={{
+                      position: 'absolute',
+                      width: '240px',
+                      height: 'auto',
+                      left: 0,
+                      top: 0,
+                      imageRendering: 'pixelated'
+                    }}
+                  />
+                )}
+              </div>
+
+              {!gameEnded && (
+                <img
+                  src={playerSprite}
+                  className="player"
+                  alt="Player"
+                  style={{
+                    left: player.x,
+                    bottom: groundY - player.y,
+                    transform: player.facing === 'left' ? 'scaleX(-1)' : 'none',
+                    width: '48px',
+                    height: '48px'
+                  }}
+                />
+              )}
+
+              {/* Ground matrix – only visible columns are mounted for performance */}
+              <div className="ground-strip" aria-hidden="true">
+                {GROUND_MAP.flatMap((row, rowIndex) => {
+                  const rowBottom = (GROUND_ROWS - 1 - rowIndex) * TILE_SIZE;
+                  const colStart = Math.max(0, Math.floor(cameraX / TILE_SIZE) - 1);
+                  const colEnd = Math.min(GROUND_COLS - 1, Math.ceil((cameraX + VIEWPORT_WIDTH) / TILE_SIZE) + 1);
+                  return row.slice(colStart, colEnd + 1).reduce((acc, tile, i) => {
+                    if (!tile) return acc;
+                    const col = colStart + i;
+                    acc.push(
+                      <img
+                        key={`g-${rowIndex}-${col}`}
+                        src={asset('ground-brick.png')}
+                        className="ground-tile"
+                        alt=""
+                        style={{ left: col * TILE_SIZE, bottom: rowBottom }}
+                      />
+                    );
+                    return acc;
+                  }, []);
+                })}
+              </div>
             </div>
-          ))}
 
-          {/* Lockdown warning billboard */}
-          <div className="lockdown-billboard" style={{ left: LOCKDOWN_BILLBOARD_X, bottom: GROUND_ROWS * TILE_SIZE }}>
-            <div className="lockdown-sign">LOCKDOWN</div>
-            <div className="lockdown-pole" />
-          </div>
-
-          {/* Home zone with label */}
-          <div className="home-goal" style={{ left: HOME_X, bottom: GROUND_ROWS * TILE_SIZE }}>
-            <img
-              src={asset('home.png')}
-              className="home"
-              alt="Home goal"
-            />
-                        <span className="home-label">YOUR TEAM</span>
-
-            {showFireworks && (
+            {/* Modi-ji animation */}
+            {showModiJi && (
               <img
-                src={asset('fireworks.gif')}
-                className="fireworks"
-                alt="Fireworks"
-                style={{
-                  position: 'absolute',
-                  width: '240px',
-                  height: 'auto',
-                  left: 0,
-                  top: 0,
-                  imageRendering: 'pixelated'
-                }}
+                src={asset('modi-ji.gif')}
+                className="modi-ji"
+                alt="Modi-ji"
+                style={{ transform: 'scaleX(-1)' }}
               />
             )}
-          </div>
 
-          {!gameEnded && (
-            <img
-              src={playerSprite}
-              className="player"
-              alt="Player"
-              style={{ 
-                left: player.x, 
-                bottom: groundY - player.y, 
-                transform: player.facing === 'left' ? 'scaleX(-1)' : 'none',
-                width: '48px',
-                height: '48px'
-              }}
-            />
-          )}
+            {!started && (
+              <div className="intro-card" role="status" aria-live="polite">
+                <h1>Pratik Agarwal</h1>
+                <p>UI Full Stack Developer for hire</p>
 
-          {/* Ground matrix – only visible columns are mounted for performance */}
-          <div className="ground-strip" aria-hidden="true">
-            {GROUND_MAP.flatMap((row, rowIndex) => {
-              const rowBottom = (GROUND_ROWS - 1 - rowIndex) * TILE_SIZE;
-              const colStart = Math.max(0, Math.floor(cameraX / TILE_SIZE) - 1);
-              const colEnd = Math.min(GROUND_COLS - 1, Math.ceil((cameraX + VIEWPORT_WIDTH) / TILE_SIZE) + 1);
-              return row.slice(colStart, colEnd + 1).reduce((acc, tile, i) => {
-                if (!tile) return acc;
-                const col = colStart + i;
-                acc.push(
-                  <img
-                    key={`g-${rowIndex}-${col}`}
-                    src={asset('ground-brick.png')}
-                    className="ground-tile"
-                    alt=""
-                    style={{ left: col * TILE_SIZE, bottom: rowBottom }}
-                  />
-                );
-                return acc;
-              }, []);
-            })}
-          </div>
-        </div>
+                <span>Press <label className="enter-highlight">Enter</label> to begin</span>
+                <span className="controls-text">Controls: ⬅️⬆️⬇️➡️ or [W], [A], [S], [D], [Shift]</span><br />
+                <small>Kindly make sure you have a stable internet connection for smoother experience.</small>
+              </div>
+            )}
 
-        {/* Modi-ji animation */}
-        {showModiJi && (
-          <img
-            src={asset('modi-ji.gif')}
-            className="modi-ji"
-            alt="Modi-ji"
-            style={{ transform: 'scaleX(-1)' }}
-          />
-        )}
+            {activeBanner && started && (
+              <div className="career-banner" role="status" aria-live="polite">
+                <div className="career-banner-company">{activeBanner.company}</div>
+                <div className="career-banner-dates">{activeBanner.doj} &ndash; {activeBanner.dos}</div>
+                <div className="career-banner-designation">{activeBanner.designation}</div>
+                <div className="career-banner-location">{activeBanner.location}</div>
+              </div>
+            )}
 
-        {!started && (
-          <div className="intro-card" role="status" aria-live="polite">
-            <h1>Pratik Agarwal</h1>
-            <p>UI Full Stack Developer for hire</p>
-            
-            <span>Press <label className="enter-highlight">Enter</label> to begin</span>
-            <span className="controls-text">Controls: ⬅️⬆️⬇️➡️ or [W], [A], [S], [D], [Shift]</span><br/>
-            <small>Kindly make sure you have a stable internet connection for smoother experience.</small>
-          </div>
-        )}
+            {showOverlay && (
+              <div className="game-over-overlay">
+                <button className="overlay-close" onClick={handleCloseOverlay} title="Close overlay">✕</button>
+                <div className="game-over-content">
+                  <div className="game-over-title">GAME OVER</div>
+                  <div className="game-over-thanks">Thanks for playing!</div>
 
-        {activeBanner && started && (
-          <div className="career-banner" role="status" aria-live="polite">
-            <div className="career-banner-company">{activeBanner.company}</div>
-            <div className="career-banner-dates">{activeBanner.doj} &ndash; {activeBanner.dos}</div>
-            <div className="career-banner-designation">{activeBanner.designation}</div>
-            <div className="career-banner-location">{activeBanner.location}</div>
-          </div>
-        )}
+                  <div className="contact-info">
+                    <div className="contact-item">
+                      <span className="contact-icon">✉️</span>
+                      <a href="mailto:heypratik.js@gmail.com" className="contact-text">heypratik.js@gmail.com</a>
+                    </div>
 
-        {showOverlay && (
-          <div className="game-over-overlay">
-            <button className="overlay-close" onClick={handleCloseOverlay} title="Close overlay">✕</button>
-            <div className="game-over-content">
-              <div className="game-over-title">GAME OVER</div>
-              <div className="game-over-thanks">Thanks for playing!</div>
-              
-              <div className="contact-info">
-                <div className="contact-item">
-                  <span className="contact-icon">✉️</span>
-                  <a href="mailto:heypratik.js@gmail.com" className="contact-text">heypratik.js@gmail.com</a>
-                </div>
-                
-                <div className="contact-item">
-                  <span className="contact-icon">📱</span>
-                  <span className="contact-text">+91-93693-19401</span>
-                </div>
-                
-                <div className="contact-item">
-                  <img src={asset('linkedin-icon.webp')} alt="LinkedIn" className="contact-icon-img" />
-                  <div>
-                    <a href="https://www.linkedin.com/in/bitastudio" target="_blank" rel="noopener noreferrer" className="contact-text">/in/bitastudio</a>
+                    <div className="contact-item">
+                      <span className="contact-icon">📱</span>
+                      <span className="contact-text">+91-93693-19401</span>
+                    </div>
+
+                    <div className="contact-item">
+                      <img src={asset('linkedin-icon.webp')} alt="LinkedIn" className="contact-icon-img" />
+                      <div>
+                        <a href="https://www.linkedin.com/in/bitastudio" target="_blank" rel="noopener noreferrer" className="contact-text">/in/bitastudio</a>
+                      </div>
+                    </div>
+
+                    <div>
+                      <div className="contact-text">Pratik Agarwal</div>
+                      <div className="contact-subtext">Full Stack Developer <br />frontend &middot; backend &middot; AI<br /> {new Date().getFullYear() - 2017}+ years of experience</div>
+                    </div>
                   </div>
-                </div>
 
-                 <div>
-                  <div className="contact-text">Pratik Agarwal</div>
-                    <div className="contact-subtext">Full Stack Developer <br/>frontend &middot; backend &middot; AI<br/> {new Date().getFullYear() - 2017}+ years of experience</div>
+                  <button className="replay-button" onClick={handleReplay}>
+                    Replay
+                  </button><br />
+                  <a href="#/courage" className="courage-stage-btn courage-stage-btn-overlay">
+                    <img src={asset('courage/courage-standing.gif')} alt="Courage" className="courage-btn-sprite" />
+                    Courage: King Ramses Curse
+                  </a>
                 </div>
               </div>
-
-              <button className="replay-button" onClick={handleReplay}>
-                Replay
-              </button><br/>
-              <a href="#/courage" className="courage-stage-btn courage-stage-btn-overlay">
-                <img src={asset('courage/courage-standing.gif')} alt="Courage" className="courage-btn-sprite" />
-                Courage: King Ramses Curse
-              </a>
-            </div>
-          </div>
-        )}
-        {isMobile && (
-          <div className="mobile-controls">
-            <div className="mobile-dpad">
-              <button
-                className="mobile-btn"
-                onTouchStart={handleTouchStart('left')}
-                onTouchEnd={handleTouchEnd('left')}
-                onTouchCancel={handleTouchEnd('left')}
-              >◀</button>
-              <button
-                className="mobile-btn"
-                onTouchStart={handleTouchStart('right')}
-                onTouchEnd={handleTouchEnd('right')}
-                onTouchCancel={handleTouchEnd('right')}
-              >▶</button>
-            </div>
-            <button
-              className="mobile-btn mobile-btn-jump"
-              onTouchStart={handleTouchStart('jump')}
-              onTouchEnd={handleTouchEnd('jump')}
-              onTouchCancel={handleTouchEnd('jump')}
-            >▲</button>
-          </div>
-        )}
-        </div>{/* end .game-inner */}
-      </div>
+            )}
+            {isMobile && (
+              <div className="mobile-controls">
+                <div className="mobile-dpad">
+                  <button
+                    className="mobile-btn"
+                    onTouchStart={handleTouchStart('left')}
+                    onTouchEnd={handleTouchEnd('left')}
+                    onTouchCancel={handleTouchEnd('left')}
+                  >◀</button>
+                  <button
+                    className="mobile-btn"
+                    onTouchStart={handleTouchStart('right')}
+                    onTouchEnd={handleTouchEnd('right')}
+                    onTouchCancel={handleTouchEnd('right')}
+                  >▶</button>
+                </div>
+                <button
+                  className="mobile-btn mobile-btn-jump"
+                  onTouchStart={handleTouchStart('jump')}
+                  onTouchEnd={handleTouchEnd('jump')}
+                  onTouchCancel={handleTouchEnd('jump')}
+                >▲</button>
+              </div>
+            )}
+          </div>{/* end .game-inner */}
+        </div>
       )}
     </div>
   );
